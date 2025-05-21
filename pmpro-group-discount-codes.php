@@ -279,7 +279,7 @@ add_filter( 'pmpro_discount_code_level', 'pmpro_groupcodes_pmpro_discount_code_l
  *
  * @param MemberOrder $order The Paid Memberships Pro order object.
  */
-function pmpro_groupcodes_pmpro_discount_code_used( $order ) {
+function pmpro_groupcodes_pmpro_discount_code_used( $user_id, $order ) {
 	global $wpdb;
 
 	// Get the membership level object associated with the order.
@@ -328,7 +328,7 @@ function pmpro_groupcodes_pmpro_discount_code_used( $order ) {
 	$order->notes .= "\n---\n{GROUPCODE:" . $group_code->code . "}\n---\n";
 	$order->saveOrder();
 }
-add_action( 'pmpro_added_order', 'pmpro_groupcodes_pmpro_discount_code_used' );
+add_action( 'pmpro_after_checkout', 'pmpro_groupcodes_pmpro_discount_code_used', 10, 2 );
 
 /**
  * Filter discount code when showing invoice.
